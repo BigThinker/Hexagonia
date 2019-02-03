@@ -1,4 +1,5 @@
 # Hexagonia
+In case you are connecting from a different PC/laptop/mobile device, setup and connect to a WiFi router.
 To use mocap:
 - Install Axis Neuron:
 	https://neuronmocap.com/sites/default/files/Axis_Neuron_x64_3_5_24_WIN_DEMO.zip

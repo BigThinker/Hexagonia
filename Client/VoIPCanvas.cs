@@ -24,12 +24,6 @@ public class VoIPCanvas : MonoBehaviour
         }
     }
 
-    // maybe raycast is needed...
-    void Update()
-    {
-
-    }
-
     public void OnVoiceToggleChanged()
     {
         IsVoiceToggleActive = VoiceToggle.isOn;

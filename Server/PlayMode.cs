@@ -277,12 +277,7 @@ public class PlayMode : MonoBehaviour
                     {
                         material = 2;
                     }
-
-                    // Tile:
-                    // tileX;
-                    // tileZ;
-                    // tileScaleY;
-                    // tileMaterial;
+                    
                     msg.TilesXZ[i * 2] = tile.index.x;
                     msg.TilesXZ[i * 2 + 1] = tile.index.z;
                     msg.TilesScaleY[i] = tile.transform.localScale.y;
@@ -319,12 +314,7 @@ public class PlayMode : MonoBehaviour
                             {
                                 objectId = 5;
                             }
-
-                            // Game objects:
-                            // objectId;
-                            // position;
-                            // rotationY;
-                            // scale;
+                            
                             msg.ObjectsId[objectsCounter] = objectId;
                             msg.ObjectsPosition[objectsCounter] = go.transform.position;
                             msg.ObjectsRotationY[objectsCounter] = go.transform.rotation.eulerAngles.y;

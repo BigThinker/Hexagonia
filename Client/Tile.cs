@@ -5,31 +5,11 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
     public CubeIndex index;
 
-    // pathfinding
-    public bool walkable;
-    // float rand;
-    // public float startScaleY;
-
     public static Vector3 Corner(Vector3 origin, float radius, int corner)
     {
         float angle = 60 * corner + 30;
         angle *= Mathf.PI / 180;
         return new Vector3(origin.x + radius * Mathf.Cos(angle), origin.y, origin.z + radius * Mathf.Sin(angle));
-    }
-
-    private void Start()
-    {
-        // rand = Random.Range(0f, 0.5f);
-        // startScaleY = transform.localScale.y;
-    }
-
-    private void Update()
-    {
-        /*
-        Vector3 scale = transform.localScale;
-        scale.y = startScaleY + Mathf.Abs(Mathf.Sin(Time.time * 2) * rand);
-        transform.localScale = scale;
-        */
     }
 }
 

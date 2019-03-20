@@ -13,12 +13,12 @@ public class CreationModeEditor : MonoBehaviour {
     // Key: Tile index and Value: list of game objects like Tile at 0, and other game objects.
     private Dictionary<string, List<GameObject>> grid = new Dictionary<string, List<GameObject>>();
 
-    bool clear = false;
-    int range = 0;
-    float addToScaleUponElevation = 0.1f;
-    float waterScaleY = 0.7f;
-    Vector2Int GridSizeLimits = new Vector2Int(10, 40);
-    List<LoadTile> gridToBeLoaded = new List<LoadTile>();
+    private bool clear = false;
+    private int range = 0;
+    private float addToScaleUponElevation = 0.1f;
+    private float waterScaleY = 0.7f;
+    private Vector2Int GridSizeLimits = new Vector2Int(10, 40);
+    private List<LoadTile> gridToBeLoaded = new List<LoadTile>();
 
     public void SetRange(float value)
     {
@@ -90,7 +90,6 @@ public class CreationModeEditor : MonoBehaviour {
         bool holdingAlt = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         scale.y = Mathf.Clamp(scale.y + (holdingAlt ? -addToScaleUponElevation : addToScaleUponElevation), 1, 10);
         tile.transform.localScale = scale;
-        // tile.startScaleY = scale.y;
 
         // elevate the objects on top.
         List<GameObject> gameObjects = grid[tile.index.ToString()];
@@ -106,7 +105,7 @@ public class CreationModeEditor : MonoBehaviour {
         }
     }
 
-    void ApplyMaterialToTile(Tile tile, bool applyRandomGeneration/*, bool addFoliage*/)
+    void ApplyMaterialToTile(Tile tile, bool applyRandomGeneration)
     {
         Renderer renderer = Const.GetMeshFromTile(tile);
 
@@ -142,7 +141,7 @@ public class CreationModeEditor : MonoBehaviour {
         // add foliage to tiles.
         // make sure there are no gameobjects on the tile already.
         // in grass or mud.
-        if (/*addFoliage && */grid[tile.index.ToString()].Count == 1 && (GUI.GetSelectedMaterial() == 0 || GUI.GetSelectedMaterial() == 1))
+        if (grid[tile.index.ToString()].Count == 1 && (GUI.GetSelectedMaterial() == 0 || GUI.GetSelectedMaterial() == 1))
         {
             GameObject go = null;
 
@@ -222,28 +221,6 @@ public class CreationModeEditor : MonoBehaviour {
             grid[tile.index.ToString()].Add(go);
         }
     }
-
-    /*
-    bool ShouldAddFoliageToTiles(List<Tile> tiles)
-    {
-        if (Input.GetMouseButton(0))
-        {
-            int tilesWithGameObjects = 0;
-            foreach (Tile tile in tiles)
-            {
-                if (AreThereGameObjectsInTile(tile))
-                {
-                    tilesWithGameObjects++;
-                }
-            }
-
-            // add more foliage only if less than 20% of tiles have foliage already.
-            return (float)tilesWithGameObjects / tiles.Count < 0.2f;
-        }
-
-        return false;
-    }
-    */
     
     float timeToResetRandomGeneration = 0.7f;
     float randomGenerationTimer = 0f;
@@ -274,8 +251,7 @@ public class CreationModeEditor : MonoBehaviour {
                     ClearLines();
 
                     List<Tile> tilesInRange = Const.TilesInRange(hitTile, range, grid);
-
-                    // bool addFoliage = ShouldAddFoliageToTiles(neighbours);
+                    
                     bool applyRandomGeneration = ShouldApplyRandomGeneration();
 
                     foreach (Tile tile in tilesInRange)
@@ -312,19 +288,6 @@ public class CreationModeEditor : MonoBehaviour {
                 }
             }
         }
-
-        /*
-        foreach(var entry in grid)
-        {
-            List<GameObject> gameObjects = entry.Value;
-            for (int i = 1; i < gameObjects.Count; i++)
-            {
-                Vector3 pos = gameObjects[i].transform.position;
-                pos.y = 2 * gameObjects[0].GetComponentInChildren<MeshRenderer>().bounds.extents.y + gameObjects[0].transform.position.y;
-                gameObjects[i].transform.position = pos;
-            }
-        }
-        */
     }
 
     public void OnSizeChanged(float value)

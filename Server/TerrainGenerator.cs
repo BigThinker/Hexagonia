@@ -86,7 +86,6 @@ public class TerrainGenerator : MonoBehaviour {
                 GameObject go = Instantiate(HexagonPrefab, pos, Quaternion.identity);
                 go.name = "Hex[" + q + "," + r + "," + (-q - r).ToString() + "]";
                 go.transform.parent = transform;
-                // go.transform.localScale = new Vector3(1, Random.Range(1f, 4f), 1);
 
                 tile = go.AddComponent<Tile>();
                 tile.index = new CubeIndex(q, r, -q - r);
@@ -140,7 +139,6 @@ public class TerrainGenerator : MonoBehaviour {
                 GameObject go = Instantiate(HexagonPrefab, pos, Quaternion.identity);
                 go.name = "Hex[" + q + "," + r + "," + (-q - r).ToString() + "]";
                 go.transform.parent = transform;
-                // go.transform.localScale = new Vector3(1, Random.Range(1f, 4f), 1);
 
                 tile = go.AddComponent<Tile>();
                 tile.index = new CubeIndex(q, r, -q - r);
@@ -170,7 +168,6 @@ public class TerrainGenerator : MonoBehaviour {
                 GameObject go = Instantiate(HexagonPrefab, pos, Quaternion.identity);
                 go.name = "Hex[" + q + "," + r + "," + (-q - r).ToString() + "]";
                 go.transform.parent = transform;
-                // go.transform.localScale = new Vector3(1, Random.Range(1f, 4f), 1);
 
                 tile = go.AddComponent<Tile>();
                 tile.index = new CubeIndex(q, r, -q - r);
@@ -270,74 +267,6 @@ public class TerrainGenerator : MonoBehaviour {
         }
 
         FindObjectOfType<UnityEngine.AI.NavMeshSurface>();
-
-        // HighlightWalkable();
-    }
-
-    void HighlightWalkable()
-    {
-        foreach(var entry in grid)
-        {
-            List<GameObject> gameObjects = entry.Value;
-
-            var tile = gameObjects[0].GetComponent<Tile>();
-            Renderer mesh = Const.GetMeshFromTile(tile);
-
-            // check if it's water material.
-            bool walkable = !mesh.sharedMaterial.name.Contains(Materials[2].name);
-            // if it was not water, check if there is a tree.
-            if (walkable)
-            {
-                for (int i = 1; i < gameObjects.Count; i++)
-                {
-                    string gameObjectName = gameObjects[i].name;
-                    
-                    if (gameObjectName.Contains("BigTree") || gameObjectName.Contains("PineTree"))
-                    {
-                        walkable = false;
-                        break;
-                    }
-                }
-            }
-
-            tile.walkable = walkable;
-
-            if (walkable)
-            {
-                Const.DrawOutline(tile.gameObject, OutlineMaterial);
-            }
-        }
-
-        List<Tile> visitedTiles = new List<Tile>();
-        Tile randTile = grid.ElementAt(Random.Range(0, grid.Count)).Value[0].GetComponent<Tile>();
-        
-        while(visitedTiles.Count < grid.Count)
-        {
-            visitedTiles.Add(randTile);
-
-            List<Tile> neighbours = Const.Neighbours(randTile, grid);
-            foreach (Tile neighbour in neighbours)
-            {
-                if (randTile.walkable && neighbour.walkable
-                    && Mathf.Abs(randTile.transform.localScale.y - neighbour.transform.localScale.y) < 0.5f)
-                {
-                    GameObject go = new GameObject();
-                    go.transform.parent = transform;
-                    go.transform.position = randTile.transform.position;
-                    LineRenderer lr = go.AddComponent<LineRenderer>();
-                    lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-                    lr.startColor = Color.white;
-                    lr.endColor = Color.white;
-                    lr.SetPosition(0, randTile.transform.position);
-                    lr.SetPosition(1, neighbour.transform.position);
-                }
-            }
-        }
-        // how to recurse in the grid from a start position?
-        // start a tile...set walkable to true or false.
-        // look at neighbour tiles...set walkable to true or false.
-        // if origin tile.walkable and neighbour tile.walkable and similar height, draw connection
-        // check neighbours of neighbour until visited neighbours == grid.count
     }
 }
 

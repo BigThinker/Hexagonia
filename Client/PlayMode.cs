@@ -130,8 +130,6 @@ public class PlayMode : MonoBehaviour
         Player player = multiPlayer.Players[msg.Id];
         if (player.Character != null)
         {
-            // player.Character.transform.position = msg.Position;
-            // player.Character.transform.rotation = Quaternion.Euler(0, msg.RotationY, 0);
             player.LerpTimer = 0f;
             player.StartPosition = player.Character.transform.position;
             player.StartRotation = player.Character.transform.rotation;
